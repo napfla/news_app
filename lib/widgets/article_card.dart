@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import '../models/article_model.dart';
 import '../utils/app_colors.dart';
 import '../utils/date_formatter.dart';
+import 'news_image.dart';
 
 class ArticleCard extends StatelessWidget {
   final ArticleModel article;
@@ -25,22 +25,9 @@ class ArticleCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-                        if (article.urlToImage != null)
-              CachedNetworkImage(
-                imageUrl: article.urlToImage!,
-                height: 200,
-                width: double.infinity,
-                fit: BoxFit.cover,
-                placeholder: (context, url) => const SizedBox(
-                  height: 200,
-                  child: Center(child: CircularProgressIndicator()),
-                ),
-                errorWidget: (context, url, error) => const SizedBox(
-                  height: 200,
-                  child: Icon(Icons.image_not_supported, size: 50),
-                ),
-              ),
-                        Padding(
+            if (article.urlToImage != null)
+            NewsImage(url: article.urlToImage!),
+            Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,8 +57,11 @@ class ArticleCard extends StatelessWidget {
                   Row(
                     children: [
                       if (article.author != null) ...[
-                        const Icon(Icons.newspaper,
-                            size: 16, color: AppColors.textSecondary),
+                        const Icon(
+                          Icons.newspaper,
+                          size: 16,
+                          color: AppColors.textSecondary,
+                        ),
                         const SizedBox(width: 4),
                         Expanded(
                           child: Text(
@@ -83,8 +73,11 @@ class ArticleCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 16),
                       ],
-                      const Icon(Icons.access_time,
-                          size: 16, color: AppColors.textSecondary),
+                      const Icon(
+                        Icons.access_time,
+                        size: 16,
+                        color: AppColors.textSecondary,
+                      ),
                       const SizedBox(width: 4),
                       Text(
                         DateFormatter.formatDate(article.publishedAt),
