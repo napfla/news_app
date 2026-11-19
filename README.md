@@ -1,17 +1,28 @@
-# news_pemob
+# Lensa Pendidikan
 
-A new Flutter project.
+Aplikasi berita pendidikan Indonesia berbasis Flutter, memakai GNews API (endpoint `/search`).
+Tugas Pemrograman Mobile: FutureBuilder, News App, dan Error Handling API.
 
-## Getting Started
+## Fitur
+- Daftar berita dengan FutureBuilder (4 state: loading, error, kosong, data)
+- Pilihan topik (chip), halaman detail, pull-to-refresh
+- Pencarian lewat dialog dan halaman hasil
+- Cache per topik untuk hemat kuota
+- `ApiException` dengan pesan error berbeda dan tombol Coba Lagi
 
-This project is a starting point for a Flutter application.
+## Cara Menjalankan
+1. Salin `config/env.example.json` menjadi `config/env.json`, isi API key GNews.
+2. Jalankan:
+   ```bash
+   flutter pub get
+   flutter run -d chrome --dart-define-from-file=config/env.json
+   ```
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Screenshot
+![Beranda](screenshots/beranda.png)
+![Detail](screenshots/detail.png)
+![Pencarian](screenshots/pencarian.png)
+### Error: tidak ada internet
+![Tidak ada internet](screenshots/error-nointernet.png)
+### Error: konfigurasi kosong
+![Tanpa config](screenshots/error-tanpaconfig.png)
