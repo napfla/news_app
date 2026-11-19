@@ -60,11 +60,52 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
+  Future<void> _bukaDialogCari() async {
+    final controller = TextEditingController();
+
+    final keyword = await showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Cari Berita'),
+        content: TextField(
+          controller: controller,
+          autofocus: true,
+          decoration: const InputDecoration(hintText: 'Kata kunci...'),
+          textInputAction: TextInputAction.search,
+          onSubmitted: (value) => Navigator.of(context).pop(value.trim()),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Batal'),
+          ),
+          FilledButton(
+            onPressed: () =>
+                Navigator.of(context).pop(controller.text.trim()),
+            child: const Text('Cari'),
+          ),
+        ],
+      ),
+    );
+
+    controller.dispose();
+
+    if (keyword != null && keyword.isNotEmpty) {
+      Get.toNamed(AppRoutes.search, arguments: keyword);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lensa Pendidikan'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: _bukaDialogCari,
+          ),
+        ],
       ),
       body: Column(
         children: [
