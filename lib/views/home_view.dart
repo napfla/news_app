@@ -30,25 +30,38 @@ class _HomeViewState extends State<HomeView> {
 
   String _selectedCategory = 'pendidikan';
 
+  /// Cache: kata kunci -> Future hasilnya
+  final Map<String, Future<List<ArticleModel>>> _cache = {};
+
   /// Future disimpan di State, BUKAN dibuat di dalam build()
   late Future<List<ArticleModel>> _futureNews;
+
+  /// Ambil dari cache, atau buat request baru kalau belum ada
+  Future<List<ArticleModel>> _ambilDariCache(String keyword) {
+    return _cache.putIfAbsent(keyword, () => _service.searchNews(keyword));
+  }
 
   @override
   void initState() {
     super.initState();
-    _futureNews = _service.searchNews(_selectedCategory);
+    _futureNews = _ambilDariCache(_selectedCategory);
   }
 
+  /// Dipakai tombol Coba Lagi & pull-to-refresh: paksa request baru
   void _muatUlang() {
     setState(() {
-      _futureNews = _service.searchNews(_selectedCategory);
+      _cache.remove(_selectedCategory);
+      _futureNews = _ambilDariCache(_selectedCategory);
     });
   }
 
+  /// Dipakai chip: pakai cache kalau ada
   void _gantiKategori(String category) {
     if (category == _selectedCategory) return;
-    _selectedCategory = category;
-    _muatUlang();
+    setState(() {
+      _selectedCategory = category;
+      _futureNews = _ambilDariCache(category);
+    });
   }
 
   Future<void> _onRefresh() async {
