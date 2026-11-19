@@ -17,16 +17,16 @@ class ArticleCard extends StatelessWidget {
 
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      elevation: 2,
+      elevation: 0,
+      color: AppColors.surface,
       clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       child: InkWell(
         onTap: onTap,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (article.urlToImage != null)
-            NewsImage(url: article.urlToImage!),
+            if (article.urlToImage != null) NewsImage(url: article.urlToImage!),
             Padding(
               padding: const EdgeInsets.all(16),
               child: Column(

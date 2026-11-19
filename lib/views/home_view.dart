@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../models/article_model.dart';
 import '../routes/app_routes.dart';
 import '../services/news_api_service.dart';
-import '../utils/app_colors.dart';
 import '../widgets/article_card.dart';
 import '../widgets/error_view.dart';
 
@@ -18,7 +17,8 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final NewsApiService _service = NewsApiService();
 
-    static const Map<String, String> _categories = {
+  // Key = kata kunci untuk API, value = label di chip
+  static const Map<String, String> _categories = {
     'pendidikan': 'Pendidikan',
     'beasiswa': 'Beasiswa',
     'kampus OR universitas': 'Kampus',
@@ -30,6 +30,7 @@ class _HomeViewState extends State<HomeView> {
 
   String _selectedCategory = 'pendidikan';
 
+  /// Future disimpan di State, BUKAN dibuat di dalam build()
   late Future<List<ArticleModel>> _futureNews;
 
   @override
@@ -59,13 +60,11 @@ class _HomeViewState extends State<HomeView> {
     }
   }
 
-    @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edu News ID'),
-        backgroundColor: AppColors.primary,
-        foregroundColor: Colors.white,
+        title: const Text('Lensa Pendidikan'),
       ),
       body: Column(
         children: [
@@ -91,7 +90,7 @@ class _HomeViewState extends State<HomeView> {
                 final articles = snapshot.data ?? [];
                 if (articles.isEmpty) {
                   return const Center(
-                    child: Text('Belum ada berita untuk kategori ini.'),
+                    child: Text('Belum ada berita untuk topik ini.'),
                   );
                 }
 
@@ -118,10 +117,10 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
-    Widget _buildCategoryChips() {
-    return Container(
+
+  Widget _buildCategoryChips() {
+    return SizedBox(
       height: 56,
-      color: AppColors.surface,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -133,6 +132,7 @@ class _HomeViewState extends State<HomeView> {
             child: ChoiceChip(
               label: Text(_categories[category]!),
               selected: category == _selectedCategory,
+              showCheckmark: false,
               onSelected: (_) => _gantiKategori(category),
             ),
           );
