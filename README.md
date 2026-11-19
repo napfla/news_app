@@ -19,8 +19,12 @@ Tugas Pemrograman Mobile: FutureBuilder, News App, dan Error Handling API.
    ```
 
 ## Screenshot
+
+### Beranda
 ![Beranda](screenshots/beranda.png)
+### Detail Berita
 ![Detail](screenshots/detail.png)
+### Pencarian Berita
 ![Pencarian](screenshots/pencarian.png)
 ### Error: tidak ada internet
 ![Tidak ada internet](screenshots/error-nointernet.png)
